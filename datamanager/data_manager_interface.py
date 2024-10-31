@@ -12,15 +12,18 @@ class DataManagerInterface(ABC):
         pass
 
     @abstractmethod
-    def add_user(self, user):
+    def add_user(self, name, email):
         pass
 
     @abstractmethod
-    def add_movie(self, movie):
+    def add_movie(self, title, rating, director, year, user_id):
         pass
 
     @abstractmethod
-    def update_movie(self, update_movie, movie_id):
+    def update_movie(self, movie_id, title, rating, director, year):
+        pass
+
+    def get_movie(self, movie_id):
         pass
 
     @abstractmethod

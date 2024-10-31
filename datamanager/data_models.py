@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, INTEGER, ForeignKey, Float
+from sqlalchemy import Column, String, INTEGER, ForeignKey, Float,Text
 from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
@@ -8,6 +8,7 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(INTEGER, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
+    email = Column(Text, nullable=False)
 
     #  Define relationships to the other table
     movies = relationship('Movie', back_populates='user')

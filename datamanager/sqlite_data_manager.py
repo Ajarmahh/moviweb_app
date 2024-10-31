@@ -17,28 +17,37 @@ class SQLiteDataManager(DataManagerInterface):
         Base.metadata.create_all(self.engine)
 
     def get_all_users(self):
-        return list(self.session.query(User.name).all())
+        return self.session.query(User.id, User.name).all()
+
+    def get_user_name(self, user_id):
+        user = self.session.query(User).filter_by(id=user_id).first()
+        return user.name
 
     def get_user_movies(self, user_id):
-        return list(self.session.query(Movie.title).filter(Movie.user_id == user_id).all())
+        return self.session.query(Movie).filter_by(user_id=user_id).all()
 
-    def add_user(self, user):
+    def add_user(self, name, email):
         #  Add a new user to the Database
-        self.session.add(user)
+        new_user = User(name=name, email=email)
+        self.session.add(new_user)
         self.session.commit()
 
-    def add_movie(self, movie):
-        self.session.add(movie)
+    def add_movie(self, title, rating, director, year, user_id):
+        new_movie = Movie(title=title, rating=rating, director=director, year=year, user_id=user_id)
+        self.session.add(new_movie)
         self.session.commit()
 
-    def update_movie(self, movie_id, updated_movie):
+    def update_movie(self, movie_id, title, rating, director, year):
         existing_movie = self.session.query(Movie).get(movie_id)
         if existing_movie:
-            existing_movie.title = updated_movie.title
-            existing_movie.rating = updated_movie.rating
-            existing_movie.director = updated_movie.director
-            existing_movie.year = updated_movie.year
+            existing_movie.title = title
+            existing_movie.rating = rating
+            existing_movie.director = director
+            existing_movie.year = year
             self.session.commit()
+
+    def get_movie(self, movie_id):
+        return self.session.query(Movie).get(movie_id)
 
     def delete_movie(self, movie_id):
         movie = self.session.query(Movie).get(movie_id)
