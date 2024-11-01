@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to MovieWeb App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to MovieWeb App</h1>
+            <p>Your favorite place to manage and explore movies!</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('get_users') }}">View Users</a></li>
+                <li><a href="{{ url_for('add_user') }}">Add New User</a></li>
+            </ul>
+        </nav>
+
+        <footer>
+            <p>&copy; {{ current_year }} MovieWeb App</p>
+        </footer>
+    </div>
+</body>
+</html>

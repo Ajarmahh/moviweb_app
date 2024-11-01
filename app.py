@@ -1,15 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datamanager.sqlite_data_manager import SQLiteDataManager
+from datetime import datetime
 
 app = Flask(__name__)
 
 #  Integrating DataManager in the Flask app
 data_manager = SQLiteDataManager('moviwebapp.db')
 
+CURRENT_YEAR = datetime.now().year
+
 
 @app.route('/')
 def home():
-    return 'Welcome to the MovieApp'
+    current_year = CURRENT_YEAR
+    return render_template('home.html', current_year=CURRENT_YEAR)
 
 
 @app.route('/users')
@@ -66,7 +70,7 @@ def add_movie(user_id):
             app.logger.error(f"Error adding movie for user {user_id}: {e}")
             return render_template('error.html', error="Could not add movie."), 500
 
-    return render_template('add_movie.html', user_id=user_id)
+    return render_template('add_movie.html', user_id=user_id, current_year=CURRENT_YEAR)
 
 
 @app.route('/users/<int:user_id>/update_movie/<int:movie_id>', methods=['POST', 'GET'])
@@ -92,7 +96,7 @@ def update_movie(movie_id, user_id):
             app.logger.error(f"Error updating movie {movie_id}: {e}")
             return render_template('error.html', error="Could not update movie."), 500
 
-    return render_template('update_movie.html', movie=movie, user_id=user_id)
+    return render_template('update_movie.html', movie=movie, user_id=user_id, current_year=CURRENT_YEAR)
 
 
 @app.route('/users/<int:user_id>/delete_movie/<int:movie_id>')

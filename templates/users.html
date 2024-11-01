@@ -6,13 +6,18 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Users - MovieWeb App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='users_styles.css') }}">
 </head>
 <body>
     <h1>Users</h1>
     <ul>
         {% for user in users %}
             <li>
-                <a href='/users/{{ user.id }}'>{{ user.name }}</a>
+                <div class="card">
+                    <img src="https://www.nicepng.com/png/detail/136-1366211_group-of-10-guys-login-user-icon-png.png"
+                         alt="User Icon">
+                    <a href='/users/{{ user.id }}'>{{ user.name }}</a>
+                </div>
             </li>
         {% endfor %}
     </ul>
